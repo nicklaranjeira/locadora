@@ -8,7 +8,7 @@ try:
         case 1:
             cadastro_clientes()
         case 2:
-            pass
+            cadastro_itens()
         case 3:
             pass
         case 4:

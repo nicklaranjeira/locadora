@@ -1,5 +1,6 @@
 class Itens:
-    def __init__(self, codigo, titulo, disponivel):
+    def __init__(self, tipo, codigo, titulo, disponivel):
+        self.__titulo = titulo
         self.__codigo = codigo
         self.__titulo = titulo
         self.__disponivel = disponivel
@@ -69,7 +70,7 @@ class Locadora:
     def cadastro_cliente(self, nome, cpf):
         self.__clientes.append(Cliente(nome=nome, cpf=cpf))
     def cadastro_item(self,codigo, titulo, disponivel):
-        self.__itens.append(self,codigo,titulo,disponivel)
+        self.__itens.append(Itens(codigo,titulo,disponivel))
     def listagem_cliente(self):
         return self.__clientes
     def listagem_item(self):
