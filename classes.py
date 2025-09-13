@@ -1,15 +1,16 @@
 class Itens:
-    def __init__(self, tipo, codigo, titulo, disponivel):
+    def __init__(self, codigo, titulo, disponivel):
         self.__titulo = titulo
-        self.__codigo = codigo
+        self._codigo = codigo
         self.__titulo = titulo
         self.__disponivel = disponivel
 
     # metodos 
-    def alugar():
-        pass
-    def devolver():
-        pass
+    def alugar(self):
+        self._disponivel = False
+
+    def devolver(self):
+        self.__disponivel = True
     
     # Metodos GETS N' SETS
 
@@ -17,10 +18,13 @@ class Itens:
         return self.__titulo
     
     def getCodigo(self):
-        return self.__codigo
+        return self._codigo
 
     def getDisponivel(self):
         return self.__disponivel
+    
+    def getTipo(self):
+        return self.__tipo
     # ----------------------------------------------------------------------------------------
 
     def setTitulo(self,titulo):
@@ -34,13 +38,26 @@ class Itens:
     def setDisponivel(self, disponivel):
         self.__disponivel = disponivel
         return self.__disponivel
+    
+    def setTipo(self,tipo):
+        self.__tipo = tipo
+        return self.__tipo
 
 
 class Filme(Itens):
-    def __init__(self, codigo, titulo, genero, duracao):
+    def __init__(self, codigo, titulo, disponivel, genero, duracao):
+        super().__init__(codigo,titulo, disponivel)
         self.__genero = genero
         self.__duracao = duracao
 
+    #GETS N' SETS
+
+    def getGenero(self):
+        return self.__genero
+    
+    def getDuracao(self):
+        return self.__duracao
+        
 class Jogo(Itens):
     def __init__(self, codigo,titulo,plataforma,faixaEtaria):
         self.__plataforma = plataforma
@@ -69,10 +86,13 @@ class Locadora:
     # métodos
     def cadastro_cliente(self, nome, cpf):
         self.__clientes.append(Cliente(nome=nome, cpf=cpf))
-    def cadastro_item(self,codigo, titulo, disponivel):
-        self.__itens.append(Itens(codigo,titulo,disponivel))
+    def cadastro_filme(self,codigo, titulo, disponivel,genero,duracao):
+        self.__itens.append(Filme(codigo,titulo,disponivel,genero,duracao ))
     def listagem_cliente(self):
         return self.__clientes
     def listagem_item(self):
         return self.__itens
+    
+
+    # GETS N' SETS
     
