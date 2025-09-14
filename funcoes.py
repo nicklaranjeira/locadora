@@ -21,7 +21,7 @@ def cadastro_clientes():
 def cadastro_itens():
     os.system('cls')
     print("--CADASTRO DE ITENS--")
-    tipo = int(input("Escolha o que você quer adicionar:\n1-Filme\n2-Jogo"))
+    tipo = int(input("Escolha o que você quer adicionar:\n1-Filme\n2-Jogo\n>"))
     match tipo:
         case 1:
             try:
@@ -56,30 +56,70 @@ def cadastro_itens():
                 disponivel = True
                 plataforma = input("Informe a plataforma do jogo:\n>")
                 faixa_etaria = input("Informe a faixa etária do jogo:\n>")
-                loc_jundiai.cadastro_item(codigo,titulo=titulo,disponivel=disponivel,plataforma=plataforma,faixa_etaria=faixa_etaria)
+                loc_jundiai.cadastro_jogos(codigo,titulo=titulo,disponivel=disponivel,plataforma=plataforma,faixaEtaria=faixa_etaria)
                 print("Cadastro realizado com sucesso!")
+                sair = input("Deseja retornar ao menu? (y/n)").lower()
+                match sair:
+                    case 'y':
+                        menu()
+                    case 'n':
+                        os.system("cls")
+                        print("Saindo...")
+                        os.system('pause')  
             except Exception as e:
                 os.system('cls')
                 print("Opção inválida!")    
                 print(f'erro:, {e}') 
+                menu()
 
 def listarItens():
     os.system("cls")
-    print("--ITENS NO NOSSO ACERVO--")
+    print("--ITENS NO NOSSO ACERVO--\n")
     for item in loc_jundiai.listagem_item():
-            print(f'Código - {item.getCodigo()}\tTítulo - {item.getTitulo()}\tDisponível - {item.getDisponivel()}\tGenêro - {item.getGenero()}\tDuração - {item.getDuracao()}')
+            print(f'\tCódigo - {item.getCodigo()}\n\tTítulo -{item.getTitulo()}\n\tDisponível - {item.getDisponivel()}\n\tGenêro - {item.getGenero()}\n\tDuração - {item.getDuracao()}')
+        
 
-def locação():
-    os.system("cls")
+def locacaoo():
     print("-- LOCAÇÃO --")
-   # for 
+    listarItens()
+    locacao = int(input("digite o código do item que você deseja alocar:\n>"))
+    for item in loc_jundiai.listagem_item():
+        if item.getCodigo() == locacao:
+            item.alugar()
+            print("Item alugado com sucesso!")
+            alugado = True
+        else:
+            print("Você digitou um id errado! Tente novamente")
+            locacaoo()
+    if alugado:
+        Cliente.locar()
+    try:
+        sair = input("Deseja retornar ao menu? (y/n)").lower()
+        match sair:
+            case 'y':
+                menu()
+            case 'n':
+                os.system("cls")
+                print("Saindo...")
+                os.system('pause')  
+    except Exception as e:
+        os.system('cls')
+        print("Opção inválida!")    
+        print(f'erro:, {e}') 
+        menu()
+
+def listagem_locados():
+    os.system("cls")
+    print("--ITENS LOCADOS--")
+    for item in Cliente.listar_alugados():
+        print(f'\tCódigo - {item.getCodigo()}\n\tTítulo -{item.getTitulo()}\n\tDisponível - {item.getDisponivel()}\n\tGenêro - {item.getGenero()}\n\tDuração - {item.getDuracao()}')
 
 def menu():
     os.system("cls")
     print('--BEM VINDO A LOCADORA--\n')
 
     print('Escolha uma opção:\n')
-    escolha = int(input("1-Cadastar um cliente\n2-Cadastrar item\n3-Listar itens\n4-Listar clientes\n5- Sair\n>"))
+    escolha = int(input("1-Cadastar um cliente\n2-Cadastrar item\n3-Listar itens\n4-Listar clientes\n5-Alugar um item\n6-Listar alugados\n7-Sair\n>"))
     try:
         match escolha:
             case 1:
@@ -88,9 +128,27 @@ def menu():
                 cadastro_itens()
             case 3:
                 listarItens()
+                try:
+                    sair = input("Deseja retornar ao menu? (y/n)").lower()
+                    match sair:
+                        case 'y':
+                            menu()
+                        case 'n':
+                            os.system("cls")
+                            print("Saindo...")
+                            os.system('pause')  
+                except Exception as e:
+                    os.system('cls')
+                    print("Opção inválida!")    
+                    print(f'erro:, {e}') 
+                    menu()
             case 4:
                 pass
             case 5:
+                locacaoo()
+            case 6:
+                listagem_locados()
+            case 7:
                 os.system("cls")
                 print("Saindo...")
                 os.system('pause')
@@ -100,3 +158,9 @@ def menu():
         print("Opção inválida!")
         os.system('pause')   
         print(f'erro: {e}')  
+
+
+# Notas para alugar
+# Você precisa selecionar qual cliente está alugando (por CPF ou ID).
+
+# Depois, passar o objeto do item alugado para o método locar do cliente.
