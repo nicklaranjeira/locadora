@@ -27,12 +27,13 @@ def cadastro_itens():
             try:
                 os.system("cls")
                 print("--CADASTRO DE FILMES--")
+                tipo = 1
                 codigo =+1
                 titulo = input("Informe o título:\n>")
                 disponivel = True
                 genero = input("Informe o gênero:\n>")
                 duracao = input('informe a duração do filme \n>' )
-                loc_jundiai.cadastro_filme(codigo=codigo,titulo=titulo,disponivel=disponivel,genero=genero,duracao=duracao)
+                loc_jundiai.cadastro_filme(codigo=codigo,titulo=titulo,disponivel=disponivel,tipo=tipo,genero=genero,duracao=duracao)
                 print("Cadastro realizado com sucesso!")
                 sair = input("Deseja retornar ao menu? (y/n)").lower()
                 match sair:
@@ -51,12 +52,13 @@ def cadastro_itens():
             try:
                 os.system("cls")
                 print("--CADASTRO DE JOGOS--")
+                tipo = 2
                 codigo =+1
                 titulo = input("Informe o título:\n>")
                 disponivel = True
                 plataforma = input("Informe a plataforma do jogo:\n>")
                 faixa_etaria = input("Informe a faixa etária do jogo:\n>")
-                loc_jundiai.cadastro_jogos(codigo,titulo=titulo,disponivel=disponivel,plataforma=plataforma,faixaEtaria=faixa_etaria)
+                loc_jundiai.cadastro_jogos(codigo,titulo=titulo,disponivel=disponivel,tipo=tipo,plataforma=plataforma,faixaEtaria=faixa_etaria)
                 print("Cadastro realizado com sucesso!")
                 sair = input("Deseja retornar ao menu? (y/n)").lower()
                 match sair:
@@ -71,13 +73,19 @@ def cadastro_itens():
                 print("Opção inválida!")    
                 print(f'erro:, {e}') 
                 menu()
+    return tipo
+escolha = cadastro_itens()
 
-def listarItens():
+def listarItens(escolha):
     os.system("cls")
     print("--ITENS NO NOSSO ACERVO--\n")
     for item in loc_jundiai.listagem_item():
-            print(f'\tCódigo - {item.getCodigo()}\n\tTítulo -{item.getTitulo()}\n\tDisponível - {item.getDisponivel()}\n\tGenêro - {item.getGenero()}\n\tDuração - {item.getDuracao()}')
-        
+        match escolha :
+            case 1:
+                print(f'\tCódigo - {item.getCodigo()}\n\tTítulo -{item.getTitulo()}\n\tDisponível - {item.getDisponivel()}\n\tGenêro - {item.getGenero()}\n\tDuração - {item.getDuracao()}')
+            case 2:
+                print(f'\tCódigo - {item.getCodigo()}\n\tTítulo -{item.getTitulo()}\n\tDisponível - {item.getDisponivel()}\n\tPlataforma - {item.Plataforma()}\n\tFaixaEtaria- {item.getFaixaEtaria()}')
+
 
 def locacaoo():
     print("-- LOCAÇÃO --")
@@ -127,7 +135,7 @@ def menu():
             case 2:
                 cadastro_itens()
             case 3:
-                listarItens()
+                listarItens(escolha)
                 try:
                     sair = input("Deseja retornar ao menu? (y/n)").lower()
                     match sair:

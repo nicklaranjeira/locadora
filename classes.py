@@ -1,9 +1,10 @@
 class Itens:
-    def __init__(self, codigo, titulo, disponivel):
+    def __init__(self, codigo, titulo, disponivel, tipo):
         self.__titulo = titulo
         self._codigo = codigo
         self.__titulo = titulo
         self.__disponivel = disponivel
+        self.__tipo = tipo
 
     # metodos 
     def alugar(self):
@@ -46,8 +47,8 @@ class Itens:
 
 
 class Filme(Itens):
-    def __init__(self, codigo, titulo, disponivel, genero, duracao):
-        super().__init__(codigo,titulo, disponivel)
+    def __init__(self, codigo, titulo, disponivel,tipo, genero, duracao):
+        super().__init__(codigo,titulo, disponivel, tipo)
         self.__genero = genero
         self.__duracao = duracao
 
@@ -68,8 +69,8 @@ class Filme(Itens):
         return self.__duracao
         
 class Jogo(Itens):
-    def __init__(self, codigo,titulo, disponivel, plataforma,faixaEtaria):
-        super().__init__(codigo,titulo,disponivel) 
+    def __init__(self, codigo,titulo, disponivel, tipo, plataforma,faixaEtaria):
+        super().__init__(codigo,titulo,disponivel, tipo) 
         self.__plataforma = plataforma
         self.__faixaEtaria = faixaEtaria
 
@@ -116,10 +117,10 @@ class Locadora:
     # métodos
     def cadastro_cliente(self, nome, cpf):
         self.__clientes.append(Cliente(nome=nome, cpf=cpf))
-    def cadastro_filme(self,codigo, titulo, disponivel,genero,duracao):
-        self.__itens.append(Filme(codigo,titulo,disponivel,genero,duracao ))
-    def cadastro_jogos(self,codigo,titulo,disponivel,plataforma,faixaEtaria):
-        self.__itens.append(Jogo(codigo,titulo,disponivel,plataforma,faixaEtaria))
+    def cadastro_filme(self,codigo, titulo, disponivel,tipo,genero,duracao):
+        self.__itens.append(Filme(codigo,titulo,disponivel,tipo,genero,duracao ))
+    def cadastro_jogos(self,codigo,titulo,disponivel,tipo,plataforma,faixaEtaria):
+        self.__itens.append(Jogo(codigo,titulo,disponivel,tipo,plataforma,faixaEtaria))
     def listagem_cliente(self):
         return self.__clientes
     def listagem_item(self):
