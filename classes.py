@@ -98,8 +98,9 @@ class Cliente:
     def locar(self, item):
         self.__itens_locados.append(item)
 
-    def devolver():
-        pass
+    def devolucao(self, item):
+        self.__itens_locados.remove(item)
+
     def listar_alugados(self):
         return self.__itens_locados
     
