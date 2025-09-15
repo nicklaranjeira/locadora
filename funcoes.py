@@ -292,5 +292,5 @@ def menu():
 
 
 # Notas:
-# Em locação e listagem alugados, o cliente não está sendo atribuido ao emprestimo
-# O cadastro está sendo sobreescrito
+# Em locação e listagem alugados, o cliente não está sendo atribuido ao empréstimo.
+# O cadastro dos itens está sendo sobreescrito.
