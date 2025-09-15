@@ -9,7 +9,7 @@ class Itens:
     # metodos 
     def alugar(self):
         self._disponivel = False
-        return 
+
 
     def devolver(self):
         self.__disponivel = True
@@ -74,7 +74,7 @@ class Jogo(Itens):
         self.__plataforma = plataforma
         self.__faixaEtaria = faixaEtaria
 
-    def getPlatafotma(self):
+    def getPlataforma(self):
         return self.__plataforma
 
     def getFaixaetaria(self):
@@ -95,13 +95,15 @@ class Cliente:
         self.__itens_locados = []
     
     # metodos
-    def locar(self,alugar):
-        self.__itens_locados.append(alugar)
+    def locar(self, item):
+        self.__itens_locados.append(item)
+
     def devolver():
         pass
     def listar_alugados(self):
         return self.__itens_locados
     
+    # GETS N' SETS
     def getNome(self):
         return self.__nome
     
