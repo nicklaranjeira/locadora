@@ -17,65 +17,83 @@ def cadastro_clientes():
     except Exception as e:
         os.system('cls')
         print("Opção inválida!")  
+        print(f'erro:, {e}')    
         os.system('pause')  
-        print(f'erro:, {e}')            
-        
-def cadastro_itens():
+        menu()
+
+codigo = 0      
+def cadastro_itens(codigo):
     os.system('cls')
-    print("--CADASTRO DE ITENS--")
-    tipo = int(input("Escolha o que você quer adicionar:\n1-Filme\n2-Jogo\n>"))
-    match tipo:
-        case 1:
-            try:
-                os.system("cls")
-                print("--CADASTRO DE FILMES--")
-                tipo = 1
-                codigo =+1
-                titulo = input("Informe o título:\n>")
-                disponivel = True
-                genero = input("Informe o gênero:\n>")
-                duracao = input('informe a duração do filme \n>' )
-                loc_jundiai.cadastro_filme(codigo=codigo,titulo=titulo,disponivel=disponivel,tipo=tipo,genero=genero,duracao=duracao)
-                print("Cadastro realizado com sucesso!")
-                sair = input("Deseja retornar ao menu? (y/n)").lower()
-                match sair:
-                    case 'y':
+    while True:
+        print("--CADASTRO DE ITENS--")
+        tipo = int(input("Escolha o que você quer adicionar:\n1-Filme\n2-Jogo\n>"))
+        match tipo:
+            case 1:
+                try:
+                    os.system("cls")
+                    print("--CADASTRO DE FILMES--")
+                    tipo = 1
+                    codigo +=1
+                    titulo = input("Informe o título:\n>")
+                    disponivel = "Disponível"
+                    genero = input("Informe o gênero:\n>")
+                    duracao = input('informe a duração do filme \n>' )
+                    loc_jundiai.cadastro_filme(codigo=codigo,titulo=titulo,disponivel=disponivel,tipo=tipo,genero=genero,duracao=duracao)
+                    os.system("cls")
+                    print("Cadastro realizado com sucesso!")
+                    try:
+                        sair = input("Escolha\n1-Adicionar outro item\n2-Voltar ao menu\n>").lower()
+                        match sair:
+                            case '1':
+                                cadastro_itens(codigo)
+                            case '2':
+                                menu() 
+                    except Exception as e:
+                        print("Opção inválida")
+                        print(f'erro: {e}')
+                        os.system("pause")
                         menu()
-                    case 'n':
-                        os.system("cls")
-                        print("Saindo...")
+                except Exception as e:
+                    os.system('cls')
+                    print("Opção inválida!")  
+                    print(f'erro:, {e}')   
+                    os.system('pause')  
+                    menu()
+ 
+            case 2:
+                try:
+                    os.system("cls")
+                    print("--CADASTRO DE JOGOS--")
+                    tipo = 2
+                    codigo +=1
+                    titulo = input("Informe o título:\n>")
+                    disponivel = "Disponível"
+                    plataforma = input("Informe a plataforma do jogo:\n>")
+                    faixa_etaria = input("Informe a faixa etária do jogo:\n>")
+                    loc_jundiai.cadastro_jogos(codigo=codigo,titulo=titulo,disponivel=disponivel,tipo=tipo,plataforma=plataforma,faixaEtaria=faixa_etaria)
+                    os.system("cls")
+                    print("Cadastro realizado com sucesso!")
+                    try:
+                        sair = input("Escolha?\n1-Adicionar outro item\n2-Voltar ao menu\n>").lower()
+                        match sair:
+                            case '1':
+                                cadastro_itens(codigo)
+                            case '2':
+                                menu()  
+                    except Exception as e:
+                        os.system('cls')
+                        print("Opção inválida!")  
+                        print(f'erro:, {e}') 
                         os.system('pause')  
-            except Exception as e:
-                os.system('cls')
-                print("Opção inválida!")  
-                os.system('pause')  
-                print(f'erro:, {e}')    
-        case 2:
-            try:
-                os.system("cls")
-                print("--CADASTRO DE JOGOS--")
-                tipo = 2
-                codigo =+1
-                titulo = input("Informe o título:\n>")
-                disponivel = True
-                plataforma = input("Informe a plataforma do jogo:\n>")
-                faixa_etaria = input("Informe a faixa etária do jogo:\n>")
-                loc_jundiai.cadastro_jogos(codigo,titulo=titulo,disponivel=disponivel,tipo=tipo,plataforma=plataforma,faixaEtaria=faixa_etaria)
-                print("Cadastro realizado com sucesso!")
-                sair = input("Deseja retornar ao menu? (y/n)").lower()
-                match sair:
-                    case 'y':
                         menu()
-                    case 'n':
-                        os.system("cls")
-                        print("Saindo...")
-                        os.system('pause')  
-            except Exception as e:
-                os.system('cls')
-                print("Opção inválida!")    
-                print(f'erro: {e}') 
-                menu()
-    return tipo
+                        
+
+                except Exception as e:
+                    os.system('cls')
+                    print("Opção inválida!")    
+                    print(f'erro: {e}') 
+                    menu()
+        break    
 
 
 def listarItens():
@@ -84,20 +102,20 @@ def listarItens():
     listagem = int(input("Qual gostaria de consultar?\n1-Filmes\n2-Jogos\n>"))
     try:
         for item in loc_jundiai.listagem_item():
-            if listagem == 1:
+            if item.getDisponivel() == "Disponível" and listagem == 1:
                         if item.getTipo() == 1:
-                            os.system("cls")
-                            print(f'\tCódigo - {item.getCodigo()}\n\tTítulo -{item.getTitulo()}\n\tDisponível - {item.getDisponivel()}\n\tGenêro - {item.getGenero()}\n\tDuração - {item.getDuracao()}')
+                            print(f'\tCódigo - {item.getCodigo()}\n\tTítulo -{item.getTitulo()}\n\tDisponível - {item.getDisponivel()}\n\tGenêro - {item.getGenero()}\n\tDuração - {item.getDuracao()}\n---------------------------------------------')
                             
-            if listagem == 2:
+            if item.getDisponivel() == "Disponível" and listagem == 2:
                         if item.getTipo() == 2:
-                            os.system("cls")
-                            print(f'\tCódigo - {item.getCodigo()}\n\tTítulo -{item.getTitulo()}\n\tDisponível - {item.getDisponivel()}\n\tPlataforma - {item.getPlataforma()}\n\tFaixaEtaria- {item.getFaixaetaria()}')
+                                print(f'\tCódigo - {item.getCodigo()}\n\tTítulo -{item.getTitulo()}\n\tDisponível - {item.getDisponivel()}\n\tPlataforma - {item.getPlataforma()}\n\tFaixaEtaria- {item.getFaixaetaria()}\n----------------------------------')
 
     except Exception as e:
         os.system("cls")
         print("opção inválida")
         print(f'erro:{e}')
+        os.system("pause")
+        menu()
 
 def listarClientes():
     os.system("cls")
@@ -177,7 +195,7 @@ def devolver():
     try: 
         codigo = int(input('Digite o código do item que deseja devolver:\n>'))
         for item in loc_jundiai.listagem_item():
-            if item.getCodigo() == codigo:
+            if item.getCodigo() == codigo and item.getDisponivel() == False:
                 item.devolver()
                 devolvido = True
                 break
@@ -226,7 +244,7 @@ def menu():
             case 1:
                 cadastro_clientes()
             case 2:
-                cadastro_itens()
+                cadastro_itens(codigo)
             case 3:
                 listarItens()
                 try:
@@ -291,6 +309,4 @@ def menu():
         print(f'erro: {e}')  
 
 
-# Notas:
-# Em locação e listagem alugados, o cliente não está sendo atribuido ao empréstimo.
-# O cadastro dos itens está sendo sobreescrito.
+
