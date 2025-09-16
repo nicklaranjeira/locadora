@@ -126,7 +126,7 @@ def listarClientes():
 def locacaoo():
     print("-- LOCAÇÃO --")
     listarItens()
-    locacao = int(input("digite o código do item que você deseja alocar:\n>"))
+    locacao = int(input("Digite o código do item que você deseja alocar:\n>"))
     for item in loc_jundiai.listagem_item():
         if item.getCodigo() == locacao:
             item.alugar()
@@ -167,7 +167,7 @@ def listagem_locados():
     os.system("cls")
     print("--ITENS LOCADOS--")
     try:
-        cpf = input("Insira seu CPF")
+        cpf = input("Insira seu CPF:\n>")
         for cliente in loc_jundiai.listagem_cliente(): 
             if cliente.getCPF() == cpf:
                 itens = cliente.listar_alugados()  
@@ -178,9 +178,9 @@ def listagem_locados():
                     for item in itens: 
                         print("\nITENS")
                         if item.getTipo() == 1:
-                                print(f'\tCódigo - {item.getCodigo()}\n\tTítulo -{item.getTitulo()}\n\tDisponível - {item.getDisponivel()}\n\tGenêro - {item.getGenero()}\n\tDuração - {item.getDuracao()}')
+                                print(f'\tCódigo - {item.getCodigo()}\n\tTítulo -{item.getTitulo()}\n\tDisponível - {item.getDisponivel()}\n\tGenêro - {item.getGenero()}\n\tDuração - {item.getDuracao()}\n-----------------------------------------------------------------')
                         elif item.getTipo() == 2:
-                                print(f'\tCódigo - {item.getCodigo()}\n\tTítulo -{item.getTitulo()}\n\tDisponível - {item.getDisponivel()}\n\tPlataforma - {item.getPlataforma()}\n\tFaixaEtaria- {item.getFaixaetaria()}')
+                                print(f'\tCódigo - {item.getCodigo()}\n\tTítulo -{item.getTitulo()}\n\tDisponível - {item.getDisponivel()}\n\tPlataforma - {item.getPlataforma()}\n\tFaixaEtaria- {item.getFaixaetaria()}\n---------------------------------------------------------')
     except Exception as e:
         os.system("Cls")
         print("Opção inválida")
@@ -195,7 +195,7 @@ def devolver():
     try: 
         codigo = int(input('Digite o código do item que deseja devolver:\n>'))
         for item in loc_jundiai.listagem_item():
-            if item.getCodigo() == codigo and item.getDisponivel() == False:
+            if item.getCodigo() == codigo and item.getDisponivel() == "Emprestado":
                 item.devolver()
                 devolvido = True
                 break
@@ -305,8 +305,10 @@ def menu():
     except Exception as e:
         os.system('cls')
         print("Opção inválida!")
-        os.system('pause')   
-        print(f'erro: {e}')  
+        print(f'erro: {e}') 
+        os.system('pause') 
+        menu()  
+        
 
 
 
